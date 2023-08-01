@@ -11,7 +11,7 @@ const app = express();
 
 //Configure express app
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost:3000'] }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://voice-grammar-parashchuk.vercel.app'] }));
 
 //App routes
 app.get('/', root);
