@@ -14,13 +14,12 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 if (process.env.CYCLIC_APP_ID) {
-  console.log('Creating tmp folder');
-  fs.mkdir('/tmp', (err) => {});
-  fs.writeFile('./var/task/tmp/hey.txt', '<contenet>', (err) => {
+  fs.mkdirSync('/tmp', () => {});
+  fs.writeFileSync(path.resolve('tmp') + '/hey.txt', '<contenet>', (err) => {
     console.log(err);
   });
-  console.log(path.resolve('tmp'));
 }
+
 //Configure express app
 app.use(express.json());
 app.use(
