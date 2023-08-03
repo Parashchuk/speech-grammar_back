@@ -14,7 +14,16 @@ const app = express();
 //Configure express app
 app.use(express.json());
 app.use(express.static('temp'));
-app.use(cors({ origin: ['http://localhost:3000', 'https://voice-grammar-parashchuk.vercel.app'] }));
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://voice-grammar-parashchuk.vercel.app',
+      'https://voice-grammar-git-main-parashchuk.vercel.app',
+      'https://voice-grammar.vercel.app',
+    ],
+  })
+);
 
 //Configure multer
 let storage = multer.diskStorage({
