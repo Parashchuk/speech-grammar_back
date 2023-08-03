@@ -13,7 +13,7 @@ const app = express();
 
 //Configure express app
 app.use(express.json());
-app.use(express.static('temp'));
+app.use(express.static('tmp'));
 app.use(
   cors({
     origin: [
