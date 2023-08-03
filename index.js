@@ -13,7 +13,10 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 if (process.env.CYCLIC_APP_ID) {
-  fs.mkdir('./tmp', (err) => {});
+  console.log('Creating tmp folder');
+  fs.mkdir('./tmp', (err) => {
+    console.log(err);
+  });
 }
 
 //Configure express app
