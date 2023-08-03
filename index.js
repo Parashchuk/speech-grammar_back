@@ -34,7 +34,7 @@ let upload = multer({ storage });
 //App routes
 app.get('/', root);
 app.post('/correctMessage', correctMessage);
-app.post('/transcript',cors upload.single('audio'), transcript);
+app.post('/transcript', upload.single('audio'), transcript);
 
 //Start server
 app.listen(PORT, () => {
