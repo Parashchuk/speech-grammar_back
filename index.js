@@ -16,12 +16,7 @@ app.use(express.json());
 app.use(express.static('tmp'));
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000/',
-      'https://voice-grammar-parashchuk.vercel.app/',
-      'https://voice-grammar-git-main-parashchuk.vercel.app/',
-      'https://voice-grammar.vercel.app/',
-    ],
+    origin: ['http://localhost:3000', 'https://voice-grammar.vercel.app'],
   })
 );
 
