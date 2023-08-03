@@ -1,8 +1,8 @@
 import ffmpeg from 'ffmpeg';
 
-const transcript = () => {
+const transcript = (req, res) => {
   try {
-    const pathToFile = 'temp/' + req.file.filename;
+    const pathToFile = 'tmp/' + req.file.filename;
     let process = new ffmpeg(pathToFile);
 
     process.then((audio) => {
