@@ -20,7 +20,7 @@ if (process.env.CYCLIC_APP_ID) {
     });
   }
 
-  fs.open(path.resolve('tmp') + '/hey', 'w', (err) => {
+  fs.open('tmp/hey', 'w', (err) => {
     console.log(err);
   });
 }
@@ -36,7 +36,7 @@ app.use(
 //Configure multer
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/var/task/tmp');
+    cb(null, 'tmp/');
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '.webm');

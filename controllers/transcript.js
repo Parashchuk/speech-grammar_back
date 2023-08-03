@@ -1,8 +1,11 @@
 import ffmpeg from 'ffmpeg';
+import path from 'path';
 
 const transcript = (req, res) => {
   try {
-    const pathToFile = '/var/task/tmp' + req.file.filename;
+    const pathToFile = 'tmp/' + req.file.filename;
+
+    console.log(pathToFile);
     let process = new ffmpeg(pathToFile);
 
     process.then((audio) => {
