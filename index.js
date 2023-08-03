@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import cors from 'cors';
+import path from 'path';
 import fs from 'fs';
 import 'dotenv/config';
 
@@ -14,9 +15,8 @@ const app = express();
 
 if (process.env.CYCLIC_APP_ID) {
   console.log('Creating tmp folder');
-  fs.mkdir('/tmp', (err) => {
-    console.log(err);
-  });
+  fs.mkdir('/tmp', (err) => {});
+  console.log(path.resolve('tmp'));
 }
 
 //Configure express app
