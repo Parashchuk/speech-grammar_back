@@ -1,24 +1,43 @@
-import ffmpeg from 'ffmpeg';
-import path from 'path';
+import axios from 'axios';
 
-const transcript = (req, res) => {
-  try {
-    const pathToFile = 'tmp/' + req.file.filename;
+import correctMessage from './correctMessage.js';
 
-    console.log(pathToFile);
-    let process = new ffmpeg(pathToFile);
+const transcript = async (req, res) => {
+  const baseUrl = 'https://api.assemblyai.com/v2';
+  const { buffer } = req.file;
 
-    process.then((audio) => {
-      audio.fnExtractSoundToMP3(pathToFile.replace('webm', 'mp3'), (error, file) => {
-        if (!error) console.log('Audio file: ' + file);
-        if (error) console.log(error);
-      });
+  //Upload buffer file to the aseembly
+  const uploadAudioReponse = await axios.post(`${baseUrl}/upload`, buffer, {
+    headers: { authorization: process.env.ASSEMBLYAI_API_KEY },
+  });
+
+  //Register buffer in queue for transcript
+  const queueRegister = await axios.post(
+    baseUrl + '/transcript',
+    { audio_url: uploadAudioReponse.data.upload_url },
+    {
+      headers: { authorization: process.env.ASSEMBLYAI_API_KEY },
+    }
+  );
+
+  //Polling api endpoint, till the transcript ends
+  while (true) {
+    const pollingResponse = await axios.get(`${baseUrl}/transcript/${queueRegister.data.id}`, {
+      headers: {
+        authorization: process.env.ASSEMBLYAI_API_KEY,
+      },
     });
-  } catch (err) {
-    console.log(err);
-  }
+    const transcriptionResult = pollingResponse.data;
 
-  return res.status(200).json({ message: 'success' });
+    if (transcriptionResult.status === 'completed') {
+      const req = { body: { message: transcriptionResult.text } };
+      return correctMessage(req, res);
+    } else if (transcriptionResult.status === 'error') {
+      throw new Error(`Transcription failed: ${transcriptionResult.error}`);
+    } else {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+  }
 };
 
 export default transcript;
