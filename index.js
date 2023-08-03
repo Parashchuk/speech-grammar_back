@@ -14,11 +14,10 @@ const app = express();
 //Configure express app
 app.use(express.json());
 app.use(express.static('tmp'));
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://voice-grammar.vercel.app'],
-  })
-);
+app.use(cors());
+//{
+//  origin: ['http://localhost:3000', 'https://voice-grammar.vercel.app'],
+//}
 
 //Configure multer
 let storage = multer.diskStorage({
@@ -35,7 +34,7 @@ let upload = multer({ storage });
 //App routes
 app.get('/', root);
 app.post('/correctMessage', correctMessage);
-app.post('/transcript', upload.single('audio'), transcript);
+app.post('/transcript',cors upload.single('audio'), transcript);
 
 //Start server
 app.listen(PORT, () => {
