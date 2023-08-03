@@ -20,7 +20,7 @@ if (process.env.CYCLIC_APP_ID) {
     });
   }
 
-  fs.writeFileSync(path.resolve('tmp') + '/hey.txt', '<contenet>', (err) => {
+  fs.open(path.resolve('tmp') + '/hey', 'w', (err) => {
     console.log(err);
   });
 }
