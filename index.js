@@ -14,7 +14,7 @@ const app = express();
 
 if (process.env.CYCLIC_APP_ID) {
   console.log('Creating tmp folder');
-  fs.mkdir('./tmp', (err) => {
+  fs.mkdir('/tmp', (err) => {
     console.log(err);
   });
 }
