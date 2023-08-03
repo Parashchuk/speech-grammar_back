@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import cors from 'cors';
+import fs from 'fs';
 import 'dotenv/config';
 
 import root from './controllers/root.js';
@@ -11,13 +12,17 @@ import transcript from './controllers/transcript.js';
 const PORT = process.env.PORT || 4000;
 const app = express();
 
+if (process.env.CYCLIC_APP_ID) {
+  fs.mkdir('./tmp', (err) => {});
+}
+
 //Configure express app
 app.use(express.json());
-app.use(express.static('tmp'));
-app.use(cors());
-//{
-//  origin: ['http://localhost:3000', 'https://voice-grammar.vercel.app'],
-//}
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'https://voice-grammar.vercel.app'],
+  })
+);
 
 //Configure multer
 let storage = multer.diskStorage({
