@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 if (process.env.CYCLIC_APP_ID) {
-  fs.mkdirSync('/tmp', () => {});
+  fs.mkdirSync('/tmp', (err) => {
+    console.log(err);
+  });
   fs.writeFileSync(path.resolve('tmp') + '/hey.txt', '<contenet>', (err) => {
     console.log(err);
   });
