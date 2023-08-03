@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import cors from 'cors';
 import path from 'path';
-import fs from 'fs';
+import fs, { existsSync } from 'fs';
 import 'dotenv/config';
 
 import root from './controllers/root.js';
@@ -14,9 +14,12 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 if (process.env.CYCLIC_APP_ID) {
-  fs.mkdirSync('/tmp', (err) => {
-    console.log(err);
-  });
+  if (existsSync(!path.resolve('tmp'))) {
+    fs.mkdirSync('/tmp', (err) => {
+      console.log(err);
+    });
+  }
+
   fs.writeFileSync(path.resolve('tmp') + '/hey.txt', '<contenet>', (err) => {
     console.log(err);
   });
