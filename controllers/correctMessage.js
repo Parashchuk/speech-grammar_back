@@ -29,7 +29,7 @@ const correctMessage = async (req, res) => {
       }
     }
 
-    return res.status(200).json({ message: checkedMessage.responseMessage });
+    return res.status(200).json({ userMessage, correctedMessage: checkedMessage.responseMessage });
   } catch (err) {
     res.status(500).json({
       message: 'There is a technical problem on the server, we are already working on its solution',
@@ -59,7 +59,7 @@ const generateResponseMessage = (errors, message) => {
     }
   } else {
     return {
-      resultedString: "Congratulations! we couldn't find any mistakes, gread job.",
+      resultedString: '',
       passed: true,
     };
   }

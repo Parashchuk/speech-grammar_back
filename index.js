@@ -26,6 +26,15 @@ let upload = multer({ storage: multer.memoryStorage() });
 app.get('/', root);
 app.post('/correctMessage', correctMessage);
 app.post('/transcript', upload.single('audio'), transcript);
+app.get('auth/me', () => {
+  console.log('auth me');
+});
+app.post('auth/register', () => {
+  console.log('register');
+});
+app.post('auth/login', () => {
+  console.log('login');
+});
 
 //Start server
 app.listen(PORT, () => {
